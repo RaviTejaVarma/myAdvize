@@ -1,14 +1,19 @@
-<h1>All Projects</h1>
+<h1 class="text-center">All Projects</h1>
 
 <% @projects.each do |project| %>
+<div class="col-md-4">
+<div class="panel panel-default">
+<div class="panel-body">
 <h3><%= project.title.upcase %></h3>
 <p><%= project.description.capitalize %></p>
-<p><%= project.budget %>$, <%= project.work_force %> people</p>
-<%= link_to 'Show', project_path(project) %>
-<%= link_to 'Edit', edit_project_path(project) %>
-<%= link_to 'Delete', project_path(project), method: :delete, data: {confirm: "Are You Sure?"} %>
-<br>
-
+<p>Budget : <%= project.budget %>$, Work Force : <%= project.work_force %> people</p>
+<%= link_to 'Show', project_path(project), class: 'btn btn-default' %>
+<% if project.user == current_user %>
+<%= link_to 'Edit', edit_project_path(project), class: 'btn btn-default' %>
+<%= link_to 'Delete', project_path(project), method: :delete, data: {confirm: "Are You Sure?"}, class: 'btn btn-default' %>
 <% end %>
-
-<%= link_to 'New Project', new_project_path %>
+<br>
+</div>
+</div>
+</div>
+<% end %>

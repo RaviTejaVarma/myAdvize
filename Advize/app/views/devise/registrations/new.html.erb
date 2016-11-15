@@ -1,0 +1,30 @@
+<div class="col-md-4 col-md-offset-4">
+  <div class="text-center"><h1>ADVIZE</h1></div>
+  <div class="panel panel-default">
+    <div class="panel-body">
+    <h4>User Sign Up</h4>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+  <%= devise_error_messages! %>
+
+  <div class="form-group">
+    <%= f.email_field :email, autofocus: true, class: 'form-control', placeholder: 'Email' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.password_field :password, autocomplete: "off", class: 'form-control', placeholder: 'Password (minimum 6 characters)' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.password_field :password_confirmation, autocomplete: "off", class: 'form-control', placeholder: 'Confirm Password' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.submit "Sign up", class: 'btn btn-success' %>
+  </div>
+<% end %>
+
+<%= render "devise/shared/links" %>
+</div>
+</div>
+</div>
