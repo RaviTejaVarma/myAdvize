@@ -18,5 +18,33 @@
   <%= @project.work_force %>
 </p>
 
+
+<h2>Posts</h2>
+<% @project.posts.each do |post| %>
+  <p>
+  	<% if post.user != nil %>
+   		<strong><%= post.user.email %></strong>
+   	<% else %>
+   		<strong>Anonymous</strong>
+   	<% end %>
+  </p>
+ 
+  <p>
+    <strong>Post:</strong>
+    <%= post.body %>
+  </p>
+<% end %>
+ 
+<h2>Add a post:</h2>
+<%= form_for([@project, @project.posts.build]) do |f| %>
+  <p>
+    <%= f.label :body %><br>
+    <%= f.text_area :body %>
+  </p>
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>
+
 <%= link_to 'Edit', edit_project_path(@project) %>
 <%= link_to 'Back', projects_path %>

@@ -7,7 +7,7 @@ class ProjectsController < ApplicationController
 	end
 
 	def new
-		@project = Project.new
+		@project = current_user.projects.build
 	end
 
 	def edit
@@ -15,7 +15,7 @@ class ProjectsController < ApplicationController
 	end
 
 	def create
-		@project = Project.new(project_params)
+		@project = current_user.projects.build(project_params)
  
    	    if @project.save
 	    	redirect_to @project
@@ -35,7 +35,7 @@ class ProjectsController < ApplicationController
 	end
 
 	def show
-		@project = Project.find(params[:id])
+		@project = Project.find_by_title(params[:title])
 	end
 
 	def destroy
