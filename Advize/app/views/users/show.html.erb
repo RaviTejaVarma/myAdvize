@@ -1,0 +1,9 @@
+<h1 class="text-center">Profile</h1>
+	<div class="img-responsive col-md-3 pull-left">
+	<% if @user.image.url == nil %>
+		<%= image_tag ('profile.png') %>
+	<% else %>
+		<%= image_tag @user.image %>
+	<% end %>
+	</div>
+	<strong class="">Username : </strong><%= @user.username %>

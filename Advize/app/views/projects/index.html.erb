@@ -1,22 +1,70 @@
-<h1 class="text-center">All Projects</h1>
+<% if user_signed_in? %>
+<ul class="nav nav-tabs">
+	  <li class="active"><a href="#allprojects" data-toggle="tab">All Projects</a></li>
+	  <li><a href="#myprojects" data-toggle="tab">My Projects</a></li>
+  </ul>
+<% end %>
 
-<% @projects.each do |project| %>
-<div class="col-md-4">
-<div class="panel panel-default">
-<div class="panel-body">
-<h3><%= project.title.upcase %></h3>
-<% unless project.user == nil %>
-<small>created by <%= project.user.email %></small>
+<div id="myTabContent" class="tab-content">
+ <div class="tab-pane active" id="allprojects">
+
+<% @projects.reverse.each do |project| %>
+	<div class="col-md-4">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<div class="projectimage">
+					<% if project.image.url == nil %>
+						<%= image_tag ('project.jpg'), class: 'img-responsive projectimage' %>
+					<% else %>
+		  				<%= image_tag project.image, class: 'img-responsive projectimage' %>
+		  			<% end %>
+	  			</div>
+				<h3><%= project.title.upcase %></h3>
+				<% if project.user == nil %>
+					<small>Created by Anonymous</small>
+				<% else %>
+					<small>Created by <%= link_to project.user.email, user_path(project.user.username) %> <%= time_ago_in_words(project.created_at) %> ago</small>
+				<% end %>
+				<p><%= project.description.capitalize %></p>
+				<p>Budget : <%= project.budget %>$, Work Force : <%= project.work_force %> people</p>
+				<%= link_to 'Show', project_path(project.title), class: 'btn btn-default' %>
+				<% if user_signed_in? && project.user == current_user %>
+					<%= link_to 'Edit', edit_project_path(project), class: 'btn btn-default' %>
+					<%= link_to 'Delete', project_path(project), method: :delete, data: {confirm: "Are You Sure?"}, class: 'btn btn-default' %>
+				<% end %>
+				<br>
+			</div>
+		</div>
+	</div>
 <% end %>
-<p><%= project.description.capitalize %></p>
-<p>Budget : <%= project.budget %>$, Work Force : <%= project.work_force %> people</p>
-<%= link_to 'Show', project_path(project.title), class: 'btn btn-default' %>
-<% if user_signed_in? && project.user == current_user %>
-<%= link_to 'Edit', edit_project_path(project), class: 'btn btn-default' %>
-<%= link_to 'Delete', project_path(project), method: :delete, data: {confirm: "Are You Sure?"}, class: 'btn btn-default' %>
+</div>
+<% if user_signed_in? %>
+<div class="tab-pane" id="myprojects">
+<% current_user.projects.reverse.each do |project| %>
+	<div class="col-md-4">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<div class="projectimage">
+					<% if project.image.url == nil %>
+						<%= image_tag ('project.jpg'), class: 'img-responsive projectimage' %>
+					<% else %>
+		  				<%= image_tag project.image, class: 'img-responsive projectimage' %>
+		  			<% end %>
+	  			</div>
+				<h3><%= project.title.upcase %></h3>
+				<small>Created <%= time_ago_in_words(project.created_at) %> ago</small>
+				<p><%= project.description.capitalize %></p>
+				<p>Budget : <%= project.budget %>$, Work Force : <%= project.work_force %> people</p>
+				<%= link_to 'Show', project_path(project.title), class: 'btn btn-default' %>
+				<% if user_signed_in? && project.user == current_user %>
+					<%= link_to 'Edit', edit_project_path(project), class: 'btn btn-default' %>
+					<%= link_to 'Delete', project_path(project), method: :delete, data: {confirm: "Are You Sure?"}, class: 'btn btn-default' %>
+				<% end %>
+				<br>
+			</div>
+		</div>
+	</div>
 <% end %>
-<br>
-</div>
-</div>
 </div>
 <% end %>
+</div>

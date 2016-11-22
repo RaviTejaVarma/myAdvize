@@ -1,38 +1,54 @@
-<p>
-  <strong>Title:</strong>
-  <%= @project.title %>
-</p>
+<div class="row">
+<div class="col-md-3">
+  <% if @project.image.url == nil %>
+    <%= image_tag ('project.jpg'), class: 'img-responsive projectimage' %>
+  <% else %>
+    <%= image_tag @project.image, class: 'img-responsive projectimage' %>
+  <% end %>
+</div>
+
+<div class="col-md-9">
+<h1 class="text-center"><%= @project.title.upcase %></h1>
  
-<p>
-  <strong>Description:</strong>
+<p class="text-center">
   <%= @project.description %>
 </p>
 
-<p>
+<div class="row">
+<p class="pull-left">
   <strong>Budget:</strong>
   <%= @project.budget %>
 </p>
 
-<p>
+<p class="pull-right">
   <strong>Work Force:</strong>
   <%= @project.work_force %>
 </p>
+</div>
+</div>
+</div>
 
-
-<h2>Posts</h2>
+<div class="row">
+<div class="col-md-6 col-md-offset-3">
+<div class="panel panel-success">
+<div class="panel-body">
+<h2 class="text-center">Posts</h2>
 <% @project.posts.each do |post| %>
-  <p>
+  <div class="panel panel-default">
+    <div class="panel-body">
   	<% if post.user != nil %>
    		<strong><%= post.user.email %></strong>
    	<% else %>
    		<strong>Anonymous</strong>
    	<% end %>
+    <small><%= time_ago_in_words(@post.created_at) %></small>
   </p>
- 
+  
   <p>
-    <strong>Post:</strong>
     <%= post.body %>
   </p>
+  </div>
+  </div>
 <% end %>
  
 <h2>Add a post:</h2>
@@ -45,6 +61,9 @@
     <%= f.submit %>
   </p>
 <% end %>
+</div>
+</div>
+</div>
+</div>
 
 <%= link_to 'Edit', edit_project_path(@project) %>
-<%= link_to 'Back', projects_path %>

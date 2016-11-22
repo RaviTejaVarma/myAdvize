@@ -35,7 +35,7 @@ class ProjectsController < ApplicationController
 	end
 
 	def show
-		@project = Project.find_by_title(params[:title])
+		@project = Project.find(params[:title])
 	end
 
 	def destroy
@@ -47,7 +47,7 @@ class ProjectsController < ApplicationController
 
 	private
 	def project_params
-		params.require(:project).permit(:title, :description, :budget, :work_force)
+		params.require(:project).permit(:title, :description, :budget, :work_force, :image)
 	end
 
 end
